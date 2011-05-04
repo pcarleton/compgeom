@@ -1,21 +1,24 @@
 package client;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 
 public class CircleList {
 	
 	ArrayList<Circle> circs;
-	LinkedList<SimplerActionListener> listeners;
+	LinkedList<SimpleActionListener> listeners;
 	
 	public CircleList() {
 		circs = new ArrayList<Circle>();
 	}
 	
-	public void addCircle(Circle c) {
+	public CircleList addCircle(Circle c) {
 		circs.add(c);
-		sortByY();		
+		sortByY();	
+		return this;
 	}
 	
 	public void sortByY() {
@@ -27,9 +30,14 @@ public class CircleList {
 		});
 	}
 	
-	public void step() {
-		if (circs.get(0).y < circs.get(1).y) {
-			//fire change
+	public void step(int frameNumber, Graphics2D g2) {
+		for (Circle c : circs) {
+			c.step(frameNumber, g2);
+		}
+		Circle curTop = getTop();
+		Circle curSec = getSec();
+		if (curTop.y > curSec.y) {
+			fireEvent(frameNumber, (curTop.y + curTop.y)/2, curSec, curTop);
 			sortByY();
 		}
 	}
@@ -38,8 +46,27 @@ public class CircleList {
 		return circs.get(0);
 	}
 	
+	public Circle getSec() {
+		return circs.get(1);
+	}
+	
 	public void subsribe(SimpleActionListener s) {
-		
+		listeners.add(s);
+	}
+	
+	
+	/**
+	 * Tells all listening that a change in the top has occured
+	 * @param frameNum
+	 * @param y
+	 * @param newTop
+	 * @param oldTop
+	 */
+	public void fireEvent(int frameNum, int y, Circle newTop, Circle oldTop) {
+		System.out.println("New Top!");
+		for (SimpleActionListener s: listeners) {
+			s.act(frameNum, y, newTop, oldTop);
+		}
 	}
 
 }

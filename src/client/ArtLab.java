@@ -112,10 +112,13 @@ public class ArtLab extends JApplet implements ActionListener
     int y1;
     int x2;
     int y2;  
+    CircleList cl;
     
-    Circle c = new Circle(50, 300, 10, Color.orange, 4);
 
         public AnimationPane() {
+        	cl = new CircleList();
+        	cl.addCircle(new Circle(400)).addCircle(new Circle(500)).addCircle(new Circle(200));
+        	
         }
      
 //Draw the current frame of animation.
@@ -170,12 +173,12 @@ public class ArtLab extends JApplet implements ActionListener
 //            g2.setPaint(color);
 //            g2.fillOval(x, newy, diameter, diameter);
             
-            
+            cl.step(frameNumber, g2);
             newShape ();
             //c.step(frameNumber, g2);
             
-            Circle d = new Circle(50, 400, 10, Color.orange, 4);
-            d.step(frameNumber, g2);
+            //Circle d = new Circle(50, 400, 10, Color.orange, 4);
+            //d.step(frameNumber, g2);
             
             
             
@@ -183,23 +186,23 @@ public class ArtLab extends JApplet implements ActionListener
             
             
             
-            newShape ( ); 
-            x = 50;
-            y = yFwdLine(100, 4); 
-            width = 10; 
-            height = 10;
-            
-            g2.setPaint(green);
-            g2.fillOval(x, y, width, height);
-            
-            newShape();
-            x = 50;
-            y = yBwdLine(700, 3); 
-            width = 10; 
-            height = 10;
-            
-            g2.setPaint(blue);
-            g2.fillOval(x, y, width, height);
+//            newShape ( ); 
+//            x = 50;
+//            y = yFwdLine(100, 4); 
+//            width = 10; 
+//            height = 10;
+//            
+//            g2.setPaint(green);
+//            g2.fillOval(x, y, width, height);
+//            
+//            newShape();
+//            x = 50;
+//            y = yBwdLine(700, 3); 
+//            width = 10; 
+//            height = 10;
+//            
+//            g2.setPaint(blue);
+//            g2.fillOval(x, y, width, height);
   
   
             

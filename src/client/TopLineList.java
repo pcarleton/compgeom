@@ -18,7 +18,7 @@ public class TopLineList implements SimpleActionListener {
 	
 	@Override
 	public void act(int x, int y, Circle newTop, Circle oldTop) {
-		
+		lines.add(new Line(anchorX, anchorY, x, y, oldTop.color));
 	}
 	
 	public void drawLines(Circle c, Graphics2D g, int framenum) {

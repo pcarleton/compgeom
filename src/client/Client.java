@@ -4,19 +4,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.*;
 
 public class Client {
-	private Ellipse2D.Double circle = new Ellipse2D.Double(10, 10, 5, 5);
 
-	int x, y;
-	private Timer timer;
-	Graphics2D g2d;
-
-	public void paintComponent(Graphics g) {
+	static Timer timer;
+	final static int DELAY = 100;
+	final static int HEIGHT = 500;
+	final static int WIDTH = 500;
+	
+	public static void main(String args[]) {
 		JFrame frame = new JFrame();
+		
+		final MoveableShape shape = new Circle(0, 0, 5);
+		ShapeIcon icon = new ShapeIcon(shape, WIDTH, HEIGHT);
 
-		final JLabel label = new JLabel();
+		final JLabel label = new JLabel(icon);
 		Container contentPane = frame.getContentPane();
 		contentPane.setLayout(new FlowLayout());
 		contentPane.add(label);
@@ -25,43 +27,26 @@ public class Client {
 		frame.pack();
 		frame.setVisible(true);
 
-		x = 10;
-		y = 10;
-		clear(g);
-		g2d = (Graphics2D) g;
-		g2d.fill(circle);
-		circle.setFrame(10, 40, 5, 5);
 
-		timer = new Timer(100, new ActionListener() {
 
+		timer = new Timer(DELAY, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				move();
+				shape.translate(0,1);
+				label.repaint();
 			}
 		});
 
 		timer.start();
 	}
-
-	// super.paintComponent clears offscreen pixmap,
-	// since we're using double buffering by default.
-
-	protected void clear(Graphics g) {
-		super.paintComponent(g);
+	
+	public static void start() {
+		timer.start();
+	}
+	
+	public static void stop() {
+		timer.stop();
 	}
 
-	protected void move() {
-		System.out.println("MOVE");
-		System.out.println(circle.x);
-		circle.setFrame(circle.getCenterX() + 10, circle.getCenterY() + 10, 5,
-				5);
-	}
 
-	protected Ellipse2D.Double getCircle() {
-		return (circle);
-	}
-
-	public static void main(String[] args) {
-		WindowUtilities.openInJFrame(new Client(), 380, 400);
-	}
 }

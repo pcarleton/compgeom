@@ -78,10 +78,12 @@ public class ArtLab extends JApplet implements ActionListener
 
     public void actionPerformed(ActionEvent e) {
         //Advance animation frame.
-        frameNumber++;
+    	if (frameNumber < 75) {
+    		frameNumber++;
 
         //Display it.
-        animationPane.repaint();
+    		animationPane.repaint();
+    	}
         
     }
 
@@ -110,6 +112,8 @@ public class ArtLab extends JApplet implements ActionListener
     int y1;
     int x2;
     int y2;  
+    
+    Circle c = new Circle(50, 300, 10, Color.orange, 4);
 
         public AnimationPane() {
         }
@@ -153,22 +157,48 @@ public class ArtLab extends JApplet implements ActionListener
             
             newShape ( ); 
             x = 50;
-            y = yFwdLine(50, 1); 
+            y = yFwdLine(300, 1); 
             width = 10; 
             height = 10;
             
             g2.setPaint(yellow);
             g2.fillOval(x, y, width, height);
             
+//            int newy = y + speed*framenum;
+//
+//            
+//            g2.setPaint(color);
+//            g2.fillOval(x, newy, diameter, diameter);
             
             
-            //newShape ( ); 
+            newShape ();
+            //c.step(frameNumber, g2);
+            
+            Circle d = new Circle(50, 400, 10, Color.orange, 4);
+            d.step(frameNumber, g2);
+            
+            
+            
+            
+            
+            
+            
+            newShape ( ); 
             x = 50;
-            y = yBwdLine(100, 4); 
+            y = yFwdLine(100, 4); 
             width = 10; 
             height = 10;
             
             g2.setPaint(green);
+            g2.fillOval(x, y, width, height);
+            
+            newShape();
+            x = 50;
+            y = yBwdLine(700, 3); 
+            width = 10; 
+            height = 10;
+            
+            g2.setPaint(blue);
             g2.fillOval(x, y, width, height);
   
   
@@ -356,7 +386,7 @@ public class ArtLab extends JApplet implements ActionListener
                 System.exit(0);
             }
         });
-        f.setSize(new Dimension(800, 550));  
+        f.setSize(new Dimension(800, 800));  
         f.setVisible(true);
         controller.startAnimation();
     }

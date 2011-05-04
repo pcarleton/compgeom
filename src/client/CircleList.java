@@ -3,11 +3,12 @@ package client;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 
 public class CircleList {
 	
 	ArrayList<Circle> circs;
-	LinkedList<SimplerActionListener> listeners;
+	LinkedList<SimpleActionListener> listeners;
 	
 	public CircleList() {
 		circs = new ArrayList<Circle>();

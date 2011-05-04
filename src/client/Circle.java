@@ -28,6 +28,7 @@ public class Circle {
         System.out.println("Circle: " + framenum);
         g2.setPaint(color);
         g2.fillOval(x, newy, diameter, diameter);
+        g2.drawLine(x, y, x+5*framenum, newy);
 	}
 
 	

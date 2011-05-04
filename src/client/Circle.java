@@ -29,6 +29,7 @@ public class Circle {
         System.out.println("Circle: " + framenum);
         g2.setPaint(color);
         g2.fillOval(x, y, diameter, diameter);
+
 	}
 
 	

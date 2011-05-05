@@ -13,6 +13,7 @@ public class CircleList {
 	
 	public CircleList() {
 		circs = new ArrayList<Circle>();
+		listeners = new LinkedList<SimpleActionListener>();
 	}
 	
 	public CircleList addCircle(Circle c) {
@@ -38,8 +39,16 @@ public class CircleList {
 		Circle curSec = getSec();
 		if (curTop.y > curSec.y) {
 			fireEvent(frameNumber, (curTop.y + curTop.y)/2, curSec, curTop);
+			for (Circle c: circs) {
+				System.out.println(c.color.toString());
+			}
 			sortByY();
+			System.out.println("*************");
+			for (Circle c: circs) {
+				System.out.println(c.color.toString());
+			}
 		}
+		sortByY();
 	}
 	
 	public Circle getTop() {
@@ -50,7 +59,7 @@ public class CircleList {
 		return circs.get(1);
 	}
 	
-	public void subsribe(SimpleActionListener s) {
+	public void subscribe(SimpleActionListener s) {
 		listeners.add(s);
 	}
 	

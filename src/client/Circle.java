@@ -26,9 +26,9 @@ public class Circle {
 	public void step(int framenum, Graphics2D g2) {
         y = origY + speed*framenum;
 
-        System.out.println("Circle: " + framenum);
         g2.setPaint(color);
         g2.fillOval(x, y, diameter, diameter);
+        g2.drawLine(x, origY, x + 5*framenum, y);
 
 	}
 

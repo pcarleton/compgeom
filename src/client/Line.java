@@ -1,5 +1,6 @@
 package client;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -19,6 +20,8 @@ public class Line {
 	}
 	
 	public void draw(Graphics2D g) {
+		g.setStroke(new BasicStroke(8.0f));
+		
 		g.setColor(color);
 		g.drawLine(x1, y1, x2, y2);
 	}

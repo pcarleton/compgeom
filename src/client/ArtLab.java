@@ -41,10 +41,10 @@ public class ArtLab extends JApplet implements ActionListener {
 		JPanel mainPanel = new JPanel(new BorderLayout());
 
 		animationPane = new AnimationPane();
-		
+
 		theT = new TPane();
-		animationPane.setPreferredSize(new Dimension(600, 200));
-		theT.setPreferredSize(new Dimension(300, 200));
+		animationPane.setPreferredSize(new Dimension(870, 200));
+		theT.setPreferredSize(new Dimension(700, 200));
 		mainPanel.add(animationPane, BorderLayout.WEST);
 		mainPanel.add(theT, BorderLayout.EAST);
 		container.add(mainPanel);
@@ -84,7 +84,7 @@ public class ArtLab extends JApplet implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		// Advance animation frame.
-		if (frameNumber < 200) {
+		if (frameNumber < 100) {
 			if (Game.expires.contains(frameNumber)) {
 				System.out.println(animationPane.kt.updateWinner().color);
 			}
@@ -93,13 +93,13 @@ public class ArtLab extends JApplet implements ActionListener {
 			// Display it.
 
 			animationPane.repaint();
-			
-
-			
+		} else {
+			animationPane.reset();
+			frameNumber = 0;
 		}
 
 	}
-	
+
 	public class TPane extends JPanel {
 		AffineTransform original;
 		Stroke originalStroke;
@@ -109,8 +109,8 @@ public class ArtLab extends JApplet implements ActionListener {
 		int screenWidth;
 		int screenHeight;
 
-		int width; 
-		
+		int width;
+
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g); // paint any space not covered
 										// by the background image
@@ -122,15 +122,14 @@ public class ArtLab extends JApplet implements ActionListener {
 			// get the screen size
 			screenWidth = 500;
 			screenHeight = 200;
-			
-			//g2.setPaint(Color.black);
-			//g2.fillRect(0, 0, screenWidth, screenHeight);
+
+			// g2.setPaint(Color.black);
+			// g2.fillRect(0, 0, screenWidth, screenHeight);
 			GameViz.g2 = g2;
 			GameViz.repaint();
-			
-			
+
 		}
-		
+
 	}
 
 	// Here's where your shapes are drawn!
@@ -171,19 +170,39 @@ public class ArtLab extends JApplet implements ActionListener {
 		Color magenta = Color.magenta;
 		Color white = Color.white;
 		Color pink = Color.pink;
-		
+
 		KineticTournament kt;
 
 		public AnimationPane() {
 			cl = new CircleList();
-			cl.addCircle(new Circle(500, orange, -7))
-					.addCircle(new Circle(100,green, 8))
-					.addCircle(new Circle(250,yellow, 1))
-					.addCircle(new Circle(400,cyan, -4));
+			cl.addCircle(new Circle(540, orange, -2))
+					.addCircle(new Circle(100, green, 4))
+					.addCircle(new Circle(250, yellow, 1))
+					.addCircle(new Circle(400, cyan, -3))
+					.addCircle(new Circle(300, white, -1))
+					.addCircle(new Circle(50, blue, 7))
+					.addCircle(new Circle(210, red, 3))
+					.addCircle(new Circle(500, magenta, 0));
 			tll = new TopLineList(cl.getTop().x, cl.getTop().y);
 			cl.subscribe(tll);
 			kt = new KineticTournament((ArrayList<Circle>) cl.circs.clone());
-			
+
+		}
+
+		public void reset() {
+			cl = new CircleList();
+			cl.addCircle(new Circle(540, orange, -2))
+					.addCircle(new Circle(100, green, 4))
+					.addCircle(new Circle(250, yellow, 1))
+					.addCircle(new Circle(400, cyan, -3))
+					.addCircle(new Circle(300, white, -1))
+					.addCircle(new Circle(50, blue, 7))
+					.addCircle(new Circle(210, red, 3))
+					.addCircle(new Circle(500, magenta, 0));
+			tll = new TopLineList(cl.getTop().x, cl.getTop().y);
+			cl.subscribe(tll);
+			GameViz.indent = 0;
+			kt = new KineticTournament((ArrayList<Circle>) cl.circs.clone());
 
 		}
 
@@ -203,24 +222,18 @@ public class ArtLab extends JApplet implements ActionListener {
 
 			// set the colors
 
-
 			// draw the background
 			g2.setPaint(gray);
 			g2.fillRect(0, 0, screenWidth, screenHeight);
 
 			// draw the shapes
-		
-
 
 			cl.step(frameNumber, g2);
-			tll.drawLines(cl.getTop(),g2, frameNumber);
+			tll.drawLines(cl.getTop(), g2, frameNumber);
 			newShape();
-			
-
-
 
 		} // Do not erase this bracket
-		// Methods for moving the objects
+			// Methods for moving the objects
 
 		// rotates shape so that is spins around itself
 		// speed is how fast
@@ -372,7 +385,7 @@ public class ArtLab extends JApplet implements ActionListener {
 				System.exit(0);
 			}
 		});
-		f.setSize(new Dimension(1000, 1000));
+		f.setSize(new Dimension(1600, 1000));
 		f.setVisible(true);
 		controller.startAnimation();
 	}

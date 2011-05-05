@@ -11,6 +11,7 @@ public class Game {
 	int expire;
 	int depth;
 	static int indent = 0;
+	Circle winner;
 	GameViz gv;
 	
 	static LinkedList<Integer> expires;
@@ -22,9 +23,11 @@ public class Game {
 		if (depth < desiredHeight) {
 			leftChild = new Game(depth+1, desiredHeight);
 			gv = new GameViz(depth);
+			gv.isLeaf = false;
 			rightChild = new Game(depth+1, desiredHeight);
 		} else {
 			gv = new GameViz(depth);
+			gv.isLeaf = true;
 			leftChild = null;
 			rightChild = null;
 		}
@@ -57,15 +60,14 @@ public class Game {
 		gv.left = playerLeft.color;
 		gv.right = playerRight.color;
 		
-		
-		Circle winner;
 		if (playerLeft.y < playerRight.y) {
 			 winner = playerLeft;
 		} else {
 			winner =  playerRight;
 		}
-		
-		gv.bg = winner.color;
+		if(depth == 0) {
+			GameViz.winningCircle.color = winner.color;
+		}
 		gv.draw();
 		return winner;
 	}

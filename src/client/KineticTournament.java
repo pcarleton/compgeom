@@ -13,12 +13,14 @@ public class KineticTournament {
 		int desiredHeight = (int)Math.floor(Math.log(circles.size())/Math.log(2)) -1;
 		
 		head = new Game(0, desiredHeight);
+
 		initiate();
 	}
 	
 	public void initiate() {
 		head.setPlayers(circles);
 		winner = head.getWinner();
+		
 	}
 	
 	public Circle updateWinner() {

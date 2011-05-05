@@ -21,8 +21,8 @@ public class TopLineList implements SimpleActionListener {
 	
 	@Override
 	public void act(int framenum, int y, Circle newTop, Circle oldTop) {
-		lines.add(new Line(anchorX, anchorY, Circle.x + (framenum-1)*5, y-oldTop.speed, oldTop.color));
-		anchorX = Circle.x + (framenum-1)*5;
+		lines.add(new Line(anchorX, anchorY, newTop.x + (framenum-1)*5, y-oldTop.speed, oldTop.color));
+		anchorX = newTop.x + (framenum-1)*5;
 		anchorY = y-oldTop.speed;
 	}
 	
@@ -33,7 +33,7 @@ public class TopLineList implements SimpleActionListener {
 		Stroke b = g.getStroke();
 		g.setStroke(new BasicStroke(8.0f));
 		g.setColor(c.color);
-		g.drawLine(anchorX, anchorY, Circle.x + framenum*5, c.y);
+		g.drawLine(anchorX, anchorY, c.x + framenum*5, c.y);
 		g.setStroke(b);
 	}
 

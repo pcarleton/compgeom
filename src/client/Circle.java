@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 public class Circle {
 	int origY;
 	int y;
-	static int diameter = 10;
-	static int x = 100;
+	int diameter = 10;
+	int x = 100;
 	Color color;
 	
 	int speed = 3;

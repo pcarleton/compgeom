@@ -5,9 +5,11 @@ package client;
  */
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.Math;
+import java.util.ArrayList;
 import java.awt.geom.*;
 
 /* 
@@ -24,6 +26,7 @@ public class ArtLab extends JApplet implements ActionListener {
 	boolean frozen = true;
 	Timer timer;
 	AnimationPane animationPane;
+	TPane theT;
 
 	void buildUI(Container container) {
 		int fps = 0;
@@ -35,10 +38,16 @@ public class ArtLab extends JApplet implements ActionListener {
 		timer = new Timer(delay, this);
 		timer.setInitialDelay(0);
 		timer.setCoalesce(true);
+		JPanel mainPanel = new JPanel(new BorderLayout());
 
 		animationPane = new AnimationPane();
-		container.add(animationPane, BorderLayout.CENTER);
-
+		
+		theT = new TPane();
+		animationPane.setPreferredSize(new Dimension(600, 200));
+		theT.setPreferredSize(new Dimension(300, 200));
+		mainPanel.add(animationPane, BorderLayout.WEST);
+		mainPanel.add(theT, BorderLayout.EAST);
+		container.add(mainPanel);
 		animationPane.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (frozen) {
@@ -76,12 +85,52 @@ public class ArtLab extends JApplet implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// Advance animation frame.
 		if (frameNumber < 200) {
+			if (Game.expires.contains(frameNumber)) {
+				System.out.println(animationPane.kt.updateWinner().color);
+			}
 			frameNumber++;
-
+			theT.repaint();
 			// Display it.
+
 			animationPane.repaint();
+			
+
+			
 		}
 
+	}
+	
+	public class TPane extends JPanel {
+		AffineTransform original;
+		Stroke originalStroke;
+		BasicStroke wideStroke;
+		Graphics2D g2;
+
+		int screenWidth;
+		int screenHeight;
+
+		int width; 
+		
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g); // paint any space not covered
+										// by the background image
+			g2 = (Graphics2D) g;
+
+			wideStroke = new BasicStroke(8.0f);
+			originalStroke = g2.getStroke();
+
+			// get the screen size
+			screenWidth = 500;
+			screenHeight = 200;
+			
+			//g2.setPaint(Color.black);
+			//g2.fillRect(0, 0, screenWidth, screenHeight);
+			GameViz.g2 = g2;
+			GameViz.repaint();
+			
+			
+		}
+		
 	}
 
 	// Here's where your shapes are drawn!
@@ -133,7 +182,7 @@ public class ArtLab extends JApplet implements ActionListener {
 					.addCircle(new Circle(400,cyan, -4));
 			tll = new TopLineList(cl.getTop().x, cl.getTop().y);
 			cl.subscribe(tll);
-			Kinetic
+			kt = new KineticTournament((ArrayList<Circle>) cl.circs.clone());
 			
 
 		}
@@ -160,11 +209,14 @@ public class ArtLab extends JApplet implements ActionListener {
 			g2.fillRect(0, 0, screenWidth, screenHeight);
 
 			// draw the shapes
+		
 
 
 			cl.step(frameNumber, g2);
 			tll.drawLines(cl.getTop(),g2, frameNumber);
 			newShape();
+			
+
 
 
 		} // Do not erase this bracket
@@ -320,7 +372,7 @@ public class ArtLab extends JApplet implements ActionListener {
 				System.exit(0);
 			}
 		});
-		f.setSize(new Dimension(800, 800));
+		f.setSize(new Dimension(1000, 1000));
 		f.setVisible(true);
 		controller.startAnimation();
 	}

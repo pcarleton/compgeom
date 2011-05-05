@@ -39,14 +39,7 @@ public class CircleList {
 		Circle curSec = getSec();
 		if (curTop.y > curSec.y) {
 			fireEvent(frameNumber, (curTop.y + curTop.y)/2, curSec, curTop);
-			for (Circle c: circs) {
-				System.out.println(c.color.toString());
-			}
 			sortByY();
-			System.out.println("*************");
-			for (Circle c: circs) {
-				System.out.println(c.color.toString());
-			}
 		}
 		sortByY();
 	}

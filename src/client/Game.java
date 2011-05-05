@@ -1,102 +1,79 @@
 package client;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
-	Game left;
-	Game right; 
+	Game leftChild;
+	Game rightChild; 
 	Circle playerLeft;
 	Circle playerRight;
 	int expire;
 	int depth;
+	static int indent = 0;
+	GameViz gv;
 	
-	static LinkedList<Circle> players;
+	static LinkedList<Integer> expires;
+	
+	static ArrayList<Circle> players;
 	
 	public Game(int depth, int desiredHeight) {
 		this.depth = depth;
-		if (depth <= desiredHeight) {
-			left = new Game(depth+1, desiredHeight);
-			right = new Game(depth+1, desiredHeight);
+		if (depth < desiredHeight) {
+			leftChild = new Game(depth+1, desiredHeight);
+			gv = new GameViz(depth);
+			rightChild = new Game(depth+1, desiredHeight);
 		} else {
-			left = null;
-			right = null;
+			gv = new GameViz(depth);
+			leftChild = null;
+			rightChild = null;
+		}
+		if (expires == null) {
+			expires = new LinkedList<Integer>();
 		}
 	}
 	
-	public void setPlayers(LinkedList<Circle> circles) {
+	public void setPlayers(ArrayList<Circle> circles) {
 		players = circles;
 	}
 	
 	
 	
 	public Circle getWinner() {
-		if (left == null && right == null) {
+		if (leftChild == null && rightChild == null) {
 			if (playerRight == null && playerLeft == null) {
-				playerLeft = players.pop();
-				playerRight = players.pop();
+				System.out.println("Circles length " + players.size() + " and Depth=" + depth);
+				playerLeft = players.remove(0);
+				playerRight = players.remove(0);
 			}
 		} else {
-			playerLeft = left.getWinner();
-			playerRight = right.getWinner();
+			playerLeft = leftChild.getWinner();
+			playerRight = rightChild.getWinner();
 		}
 		
-		expire = (playerLeft.y - playerRight.y)/(playerRight.speed - playerLeft.speed);
+		expire = 1 + (playerLeft.origY - playerRight.origY)/(playerRight.speed - playerLeft.speed);
+		expires.add(expire);
 		
+		gv.left = playerLeft.color;
+		gv.right = playerRight.color;
+		
+		
+		Circle winner;
 		if (playerLeft.y < playerRight.y) {
-			return playerLeft;
+			 winner = playerLeft;
 		} else {
-			return playerRight;
+			winner =  playerRight;
 		}
+		
+		gv.bg = winner.color;
+		gv.draw();
+		return winner;
 	}
 	
-
-	public Game getLeft() {
-		return left;
+	static void resetExpires() {
+		expires = new LinkedList<Integer>();
 	}
 
-	public void setLeft(Game left) {
-		this.left = left;
-	}
-
-	public Game getRight() {
-		return right;
-	}
-
-	public void setRight(Game right) {
-		this.right = right;
-	}
-
-	public Circle getPlayerLeft() {
-		return playerLeft;
-	}
-
-	public void setPlayerLeft(Circle playerLeft) {
-		this.playerLeft = playerLeft;
-	}
-
-	public Circle getPlayerRight() {
-		return playerRight;
-	}
-
-	public void setPlayerRight(Circle playerRight) {
-		this.playerRight = playerRight;
-	}
-
-	public int getExpire() {
-		return expire;
-	}
-
-	public void setExpire(int expire) {
-		this.expire = expire;
-	}
-
-	public int getDepth() {
-		return depth;
-	}
-
-	public void setDepth(int depth) {
-		this.depth = depth;
-	}
 
 
 	

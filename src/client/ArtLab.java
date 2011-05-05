@@ -122,16 +122,19 @@ public class ArtLab extends JApplet implements ActionListener {
 		Color magenta = Color.magenta;
 		Color white = Color.white;
 		Color pink = Color.pink;
+		
+		KineticTournament kt;
 
 		public AnimationPane() {
 			cl = new CircleList();
 			cl.addCircle(new Circle(500, orange, -7))
-					.addCircle(new Circle(200, white, 4))
 					.addCircle(new Circle(100,green, 8))
 					.addCircle(new Circle(250,yellow, 1))
 					.addCircle(new Circle(400,cyan, -4));
 			tll = new TopLineList(cl.getTop().x, cl.getTop().y);
 			cl.subscribe(tll);
+			Kinetic
+			
 
 		}
 
@@ -158,37 +161,11 @@ public class ArtLab extends JApplet implements ActionListener {
 
 			// draw the shapes
 
-			// int newy = y + speed*framenum;
-			//
-			//
-			// g2.setPaint(color);
-			// g2.fillOval(x, newy, diameter, diameter);
 
 			cl.step(frameNumber, g2);
 			tll.drawLines(cl.getTop(),g2, frameNumber);
 			newShape();
-			// c.step(frameNumber, g2);
 
-			// Circle d = new Circle(50, 400, 10, Color.orange, 4);
-			// d.step(frameNumber, g2);
-
-			// newShape ( );
-			// x = 50;
-			// y = yFwdLine(100, 4);
-			// width = 10;
-			// height = 10;
-			//
-			// g2.setPaint(green);
-			// g2.fillOval(x, y, width, height);
-			//
-			// newShape();
-			// x = 50;
-			// y = yBwdLine(700, 3);
-			// width = 10;
-			// height = 10;
-			//
-			// g2.setPaint(blue);
-			// g2.fillOval(x, y, width, height);
 
 		} // Do not erase this bracket
 		// Methods for moving the objects

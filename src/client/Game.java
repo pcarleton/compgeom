@@ -53,9 +53,12 @@ public class Game {
 			playerLeft = leftChild.getWinner();
 			playerRight = rightChild.getWinner();
 		}
-		
-		expire = 1 + (playerLeft.origY - playerRight.origY)/(playerRight.speed - playerLeft.speed);
-		expires.add(expire);
+		if(playerRight.speed-playerLeft.speed == 0) {
+			expires.add(-1);
+		} else {
+			expire = 1 + (playerLeft.origY - playerRight.origY)/(playerRight.speed - playerLeft.speed);
+			expires.add(expire);
+		}
 		
 		gv.left = playerLeft.color;
 		gv.right = playerRight.color;

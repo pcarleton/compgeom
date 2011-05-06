@@ -18,7 +18,7 @@ public class CircleList {
 	
 	public CircleList addCircle(Circle c) {
 		circs.add(c);
-		sortByY();	
+		//sortByY();	
 		return this;
 	}
 	

@@ -13,7 +13,7 @@ public class GameViz {
 	final static int bbX = 0;
 	final static int bbY = 100;
 	int x, y;
-	static LinkedList<GameViz> gvs;
+	static LinkedList<GameViz> gvs = new LinkedList<GameViz>();
 	Color left = Color.black;
 	Color right = Color.black;
 	Color bg = Color.white;
